@@ -1,0 +1,415 @@
+/* 1. VARIÁVEIS GLOBAIS */
+:root {
+  --sidebar-width-open: 150px;
+  --sidebar-width-closed: 0px;
+  --header-height: 56px;
+  --transition-speed: 0.3s;
+
+  /* Cores do Tema */
+  --accent: #0d6efd;
+  --accent-bg: rgba(13, 110, 253, 0.1);
+  --border: #dee2e6;
+  --text-h: #212529;
+  --bridge-blue: #1e2a78;
+
+  /* Kanban Card & Column */
+  --kanban-card-height: 120px;
+  --kanban-card-height-mobile: 120px;
+  --kanban-column-width: 300px;
+}
+
+/* 2. LAYOUT PRINCIPAL */
+.navbar.fixed-top {
+  z-index: 1050;
+  height: var(--header-height);
+  background-color: var(--bridge-blue);
+}
+
+/* 3. SIDEBAR (LOGICA DE TRANSIÇÃO) */
+.sidebar-nav {
+  height: calc(100vh - var(--header-height));
+  position: sticky;
+  top: var(--header-height);
+  background-color: #f0f7ff;
+  z-index: 1020;
+  border-right: 1px solid var(--border);
+  overflow-x: hidden;
+  transition: width var(--transition-speed) ease;
+}
+
+.sidebar-nav.is-open {
+  width: var(--sidebar-width-open);
+  min-width: var(--sidebar-width-open);
+  max-width: var(--sidebar-width-open);
+}
+
+.sidebar-nav.is-closed {
+  width: var(--sidebar-width-closed);
+  min-width: var(--sidebar-width-closed);
+  max-width: var(--sidebar-width-closed);
+}
+
+/* 4. ELEMENTOS INTERNOS DA SIDEBAR */
+.nav-icon-wrapper {
+  min-width: var(--sidebar-width-closed);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.nav-label {
+  white-space: nowrap;
+  transition:
+    opacity 0.2s ease,
+    visibility 0.2s;
+  margin-left: 5px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  width: 100%;
+}
+
+.sidebar-nav.is-closed .nav-label {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.active-link {
+  color: var(--accent);
+  font-weight: bold;
+  background-color: #e0eeff;
+  border-right: 3px solid var(--accent);
+}
+
+/* 5. COMPORTAMENTO MOBILE */
+@media (max-width: 767px) {
+  .sidebar-nav {
+    position: fixed;
+    left: 0;
+    z-index: 1040;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar-nav.is-closed {
+    width: 0px;
+  }
+}
+
+/* 6. COMPONENTES (CARDS & UTILS) */
+.kanban-card,
+.clientes-card {
+  transition: background-color 0.2s ease;
+}
+
+/* PAGINAÇÃO PREMIUM */
+.pagination-custom .page-item .page-link {
+    border: none;
+    color: #4a5568;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    margin: 0 3px;
+    border-radius: 8px !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.pagination-custom .page-item.active .page-link {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
+}
+
+.pagination-custom .page-item:not(.active):hover .page-link {
+    background: #edf2f7;
+    transform: translateY(-2px);
+}
+
+.pagination-custom .page-item.disabled .page-link {
+    background: transparent;
+    opacity: 0.5;
+}
+
+.kanban-card,
+.clientes-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  cursor: pointer;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.kanban-card:hover,
+.clientes-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* OTIMIZAÇÃO PARA TOQUE (TOUCH TARGETS) */
+@media (max-width: 767px) {
+  .btn-sm, .btn-icon, i.bi {
+    min-width: 32px;
+    min-height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px !important; /* Aumenta a área clicável sem mudar muito o visual */
+  }
+}
+
+.user-dropdown-custom .dropdown-toggle::after {
+  display: none;
+}
+
+.very-small {
+  font-size: 0.75rem;
+}
+
+/**
+ * REGRAS DE ESTABILIDADE PARA TOOLTIPS E SIDEBAR
+ */
+html,
+body {
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+.sidebar-nav {
+  overflow: hidden;
+  contain: paint;
+}
+
+.sidebar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px 10px;
+  box-sizing: border-box;
+  border-right: 3px solid transparent;
+  text-decoration: none;
+  flex-wrap: nowrap;
+}
+
+.nav-label {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: calc(var(--sidebar-width-open) - 60px);
+  margin-left: 10px;
+  -webkit-user-select: none;
+}
+
+.tooltip {
+  transition: opacity 0.15s linear;
+  pointer-events: none;
+  position: fixed;
+}
+
+.tooltip.fade {
+  transition: opacity 0.1s linear;
+}
+
+/* ==========================================================================
+   7. KANBAN CARD — Altura Fixa e Truncagem de Texto
+   --------------------------------------------------------------------------
+   NOTA TÉCNICA: Usamos selectores de alta especificidade (ex: html body ...)
+   para sobrepor as regras do Bootstrap (.card, .card-body) sem recorrer a
+   !important. Isto garante controlo total e manutenção limpa.
+   ========================================================================== */
+
+/* COLUNA DO KANBAN: Largura fixa controlada por variável */
+#root .kanban-column {
+  width: var(--kanban-column-width);
+  min-width: var(--kanban-column-width);
+  max-width: var(--kanban-column-width);
+  display: flex;
+  flex-direction: column;
+}
+
+/* CARTÃO: Altura fixa — especifidade máxima com #root para vencer Bootstrap */
+#root .kanban-card.card {
+  width: 100%;
+  height: var(--kanban-card-height);
+  min-height: var(--kanban-card-height);
+  max-height: var(--kanban-card-height);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  box-sizing: border-box;
+}
+
+/* CORPO DO CARTÃO: Garante que o body não cresce além do card */
+#root .kanban-card.card > .card-body.kanban-card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 10px;
+  overflow: hidden;
+  flex: 1 1 auto;
+  min-height: 0; /* Impede que o conteúdo empurre o flex container */
+}
+
+/* TÍTULO: Truncagem robusta */
+#root .kanban-card .kanban-card-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  font-size: 0.85rem;
+  line-height: 1.2;
+  margin: 0 0 2px 0;
+  flex-shrink: 0;
+}
+
+/* DESCRIÇÃO: Truncagem robusta limitada a 2 linhas */
+#root .kanban-card .kanban-card-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word; /* Para permitir quebra de palavras longas */
+  font-size: 0.75rem;
+  color: #6c757d;
+  line-height: 1.2;
+  margin: 0 0 4px 0;
+  flex-grow: 1;
+  min-height: 0;
+}
+
+/* RODAPÉ: Fixado no fundo */
+#root .kanban-card .kanban-card-footer {
+  padding-top: 4px;
+  margin-top: auto;
+  flex-shrink: 0;
+  border-top: 1px solid var(--border);
+}
+
+#root .kanban-card .kanban-card-author {
+  font-size: 0.75rem;
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ANIMAÇÕES GLOBAIS */
+@keyframes pulse-red {
+  0% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+  70% { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 0 0 6px rgba(220, 53, 69, 0); }
+  100% { transform: translate(-50%, -50%) scale(1); box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+}
+
+.animate-pulse {
+  animation: pulse-red 2s infinite;
+}
+
+#root .kanban-card .kanban-card-date {
+  font-size: 0.7rem;
+}
+
+/* Ajustes para Mobile */
+@media (max-width: 767px) {
+  #root .kanban-card.card {
+    height: var(--kanban-card-height-mobile);
+    min-height: var(--kanban-card-height-mobile);
+    max-height: var(--kanban-card-height-mobile);
+  }
+
+  .kanban-column {
+    min-width: 250px;
+    padding: 6px;
+  }
+}
+
+/* 7. ECRÃ DE LOGIN (GLASSMORPHISM & MODERN DESIGN) */
+.login-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f0f7ff 0%, #1e2a78 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Bolhas decorativas para profundidade */
+.login-wrapper::before,
+.login-wrapper::after {
+  content: "";
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(13, 110, 253, 0.1);
+  z-index: 0;
+}
+
+.login-wrapper::before {
+  top: -100px;
+  left: -100px;
+}
+
+.login-wrapper::after {
+  bottom: -100px;
+  right: -100px;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(10px) saturate(180%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15) !important;
+  z-index: 1;
+  animation: slideUp 0.6s ease-out;
+}
+
+.login-logo-circle {
+  width: 70px;
+  height: 70px;
+  background: #1e2a78;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 4px 15px rgba(30, 42, 120, 0.3);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-input {
+  border-radius: 10px !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  padding: 0.75rem 1rem !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  transition: all 0.3s ease !important;
+}
+
+.login-input:focus {
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 4px rgba(13, 110, 253, 0.1) !important;
+  border-color: var(--accent) !important;
+}

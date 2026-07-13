@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- Appender para a Consola (Terminal) -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <!-- Appender Geral do Sistema -->
+        <File name="MyFile" fileName="c:/AOR/PAJ/Proj5/BACKEND/logs/projecto5.log" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+
+        <!--Appender Exclusivo para Auditoria -->
+        <File name="AuditFile" fileName="c:/AOR/PAJ/Proj5/BACKEND/logs/audit.log" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} | %msg%n"/>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <!-- Logger específico para Auditoria (AuditLogBean) -->
+        <Logger name="aor.paj.projecto5.bean.AuditLogBean" level="info" additivity="false">
+            <AppenderRef ref="AuditFile"/>
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- Configuração para o resto das classes do projeto -->
+        <Logger name="aor.paj.projecto5" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="MyFile"/>
+        </Logger>
+
+        <!-- Nivel global (Apenas erros) -->
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
