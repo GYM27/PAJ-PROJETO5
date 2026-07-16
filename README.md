@@ -8,6 +8,22 @@
 
 Este projeto foi desenvolvido como o **Trabalho Prático 5** para a cadeira de Programação Avançada em Java (Curso Acertar o Rumo, FCTUC). Consiste numa aplicação web robusta (Frontend e Backend) para gestão de utilizadores, clientes e leads, incorporando funcionalidades avançadas em tempo real e boas práticas de arquitetura de software.
 
+## 📸 Demonstração
+
+### Versão Desktop
+<div style="display: flex; gap: 10px; flex-wrap: wrap;">
+  <img src="docs/dashboard.png" alt="Dashboard" width="400"/>
+  <img src="docs/leads.png" alt="Leads Kanban" width="400"/>
+  <img src="docs/users.png" alt="Gestão de Utilizadores" width="400"/>
+  <img src="docs/chat.png" alt="Chat" width="400"/>
+</div>
+
+### Versão Mobile
+<div style="display: flex; gap: 10px; flex-wrap: wrap;">
+  <img src="docs/dashboard-mobile.png" alt="Dashboard Mobile" width="200"/>
+
+</div>
+
 ## 🌟 Principais Funcionalidades
 
 - **Segurança e Contas:** 
@@ -63,6 +79,8 @@ PAJ-PROJETO5/
 │   ├── src/                  # Componentes, Páginas, Stores (Zustand), Serviços API
 │   ├── public/               # Assets estáticos
 │   └── package.json          # Dependências do NPM
+│
+├── docs/                     # Documentação adicional, enunciados e screenshots
 │
 └── README.md                 # Documentação do projeto
 ```

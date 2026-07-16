@@ -59,6 +59,10 @@ const apiRequest = async (endpoint, method = "GET", body = null) => {
     if (!response.ok) {
       // SE O TOKEN EXPIROU (401), EXPULSAMOS O UTILIZADOR IMEDIATAMENTE
       if (response.status === 401) {
+        if (endpoint === "/auth/login") {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || "Credenciais inválidas ou conta desativada.");
+        }
         console.warn("Sessão expirada (401). A redirecionar para o login...");
         useUserStore.getState().clearUser();
         sessionStorage.removeItem("token");
