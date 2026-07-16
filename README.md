@@ -65,7 +65,16 @@ PAJ-PROJETO5/
 │   └── package.json          # Dependências do NPM
 │
 └── README.md                 # Documentação do projeto
+
 ```
+
+<img width="457" height="838" alt="Captura de ecrã 2026-07-16 155909" src="https://github.com/user-attachments/assets/bac984cf-c2de-4a06-92a2-88d8257caa1a" />
+<img width="1918" height="916" alt="Captura de ecrã 2026-07-16 155810" src="https://github.com/user-attachments/assets/c7b59eb4-89d9-45a5-a358-f8eecd557647" />
+<img width="1912" height="901" alt="Captura de ecrã 2026-07-16 155801" src="https://github.com/user-attachments/assets/f5006ad6-82d3-4e9f-9acd-e875763071d2" />
+<img width="1917" height="871" alt="Captura de ecrã 2026-07-16 155748" src="https://github.com/user-attachments/assets/4054fa01-f58c-440f-ad7a-ddf1c9e53a85" />
+<img width="1917" height="907" alt="Captura de ecrã 2026-07-16 155737" src="https://github.com/user-attachments/assets/40c18574-91cf-4a45-96df-b4cfcbc45f2c" />
+<img width="1917" height="907" alt="Captura de ecrã 2026-07-16 155719" src="https://github.com/user-attachments/assets/645244b6-2f70-4871-9459-f9bd5cf2e9c1" />
+
 
 ## 🚀 Como Iniciar o Projeto Localmente
 
